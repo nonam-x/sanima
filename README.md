@@ -1,6 +1,13 @@
-# Sanima - Premium Movie Booking System
+# Sanima - Movie Booking System
+
+
+![App Screenshot](./assets/show.png)
+
+👉 **[Live](https://sanima.onrender.com/)**
 
 ## Overview
+
+
 Sanima (formerly BookMyTicket) is a full-stack, premium movie booking application. It provides users with a seamless, highly engaging UI to discover trending movies, view seat availability, and securely book seats using a robust backend architecture.
 
 ## Key Features
