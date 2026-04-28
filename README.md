@@ -51,52 +51,41 @@ sanima/
    ```bash
    npm install
    ```
-
-3. **Environment Variables:**
-   Create a `.env` file in the root directory and configure the necessary variables (e.g., Database URI, JWT Secrets, Port).
-   ```env
-   PORT=3000
-   MONGO_URI=mongodb://localhost:27017/sanima
-   JWT_SECRET=your_jwt_secret_key
-   # Add any other variables defined in your config
+3. **Database Configuration**: 
+   - Open `.env` and verify the `DB_HOST`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` conform to your local PostgreSQL installation.
+4. **Database Initialization**:
+   - Run the SQL queries provided in `db/init.sql` in your Postgres database to create the `users` and `seats` tables, and to populate 20 available seats.
+5. **Start Server**: 
+   ```bash
+   node index.js
    ```
 
-4. **Start the Server:**
-   - **Development Mode** (with nodemon hot-reloading):
-     ```bash
-     npm run dev
-     ```
-   - **Production Mode**:
-     ```bash
-     npm start
-     ```
+## How Authentication Works
 
-## API Documentation
+This application utilizes **JWT (JSON Web Tokens)** for secure, stateless authentication. 
+- When a user signs up `/register` or logs in `/login`, an encrypted payload inside a JWT token is generated and returned to the client.
+- The `authMiddleware.js` intercepts routes that require protection (like booking a seat), it inspects the request `Authorization: Bearer <token>` header, decodes the user information contained in it via the `JWT_SECRET`, and attaches the parsed `req.user` payload to the request itself.
+- Passwords are securely hashed via `bcrypt` salt rounds prior to being saved to the database.
 
-### Authentication (`/api/auth`)
-| Method | Endpoint | Description | Protected |
-|--------|----------|-------------|-----------|
-| POST   | `/register` | Register a new user | No |
-| POST   | `/login` | Authenticate user & receive JWT | No |
-| POST   | `/refresh` | Refresh an expired JWT | No |
-| POST   | `/logout` | Invalidate token and logout user | Yes |
+## API Endpoints
 
-### Movies & Seats (`/seats`)
-| Method | Endpoint | Description | Protected |
-|--------|----------|-------------|-----------|
-| GET    | `/` | Retrieve all available seats/shows | No |
-| GET    | `/trending` | Retrieve trending movies | No |
-| GET    | `/my-bookings`| View the current authenticated user's bookings | Yes |
-| PUT    | `/:id` | Book a specific seat by its ID | Yes |
+### 1. **Authentication**
 
-## Security & Best Practices
-- **Password Security:** All passwords are salted and securely hashed using `bcrypt` prior to database storage.
-- **Stateless Authentication:** The API employs JSON Web Tokens (JWT) for authorization.
-- **Route Protection:** A dedicated `authMiddleware` intercepts protected routes, verifying the `Authorization: Bearer <token>` header, decoding the payload, and attaching the user object (`req.user`) before allowing access.
-- **Error Handling:** Centralized error handling middleware formats and standardizes API error responses.
+**Register**
+- **Endpoint**: `POST /api/auth/register`
+- **Body**: `{ "name": "Alice", "email": "alice@gmail.com", "password": "password" }`
+- **Response**: `201 Created`
 
-## License
-This project is licensed under the ISC License.
+**Login**
+- **Endpoint**: `POST /api/auth/login`
+- **Body**: `{ "email": "alice@gmail.com", "password": "password" }`
+- **Response**: `200 OK` (Returns the JWT Bearer Token)
+
+### 2. **Seats**
+
+**Get All Seats**
+- **Endpoint**: `GET /seats`
+- **Response**: `200 OK` (Returns list of all seats)
 
 **Book a Seat**
 - **Endpoint**: `PUT /seats/:id`
