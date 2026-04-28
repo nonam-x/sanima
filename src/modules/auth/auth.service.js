@@ -78,9 +78,12 @@ export const refreshAccessToken = async (refreshToken) => {
   if (!refreshToken) throw new Error('Refresh token required');
 
   // Verify token
+  if (!process.env.REFRESH_TOKEN_SECRET) {
+    throw new Error('FATAL ERROR: REFRESH_TOKEN_SECRET is not defined in environment variables.');
+  }
   const decoded = verifyToken(
     refreshToken,
-    process.env.REFRESH_TOKEN_SECRET || 'refresh_secret_key'
+    process.env.REFRESH_TOKEN_SECRET
   );
   if (!decoded) throw new Error('Invalid refresh token');
 

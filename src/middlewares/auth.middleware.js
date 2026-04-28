@@ -16,9 +16,12 @@ export const protect = async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
 
       // Verify token
+      if (!process.env.ACCESS_TOKEN_SECRET) {
+        throw new Error('FATAL ERROR: ACCESS_TOKEN_SECRET is not defined in environment variables.');
+      }
       const decoded = jwt.verify(
         token,
-        process.env.ACCESS_TOKEN_SECRET || 'access_secret_key'
+        process.env.ACCESS_TOKEN_SECRET
       );
 
       // Get user from the token (exclude password)

@@ -9,9 +9,12 @@ dotenv.config();
  * @returns {string} Access Token
  */
 export const generateAccessToken = (user) => {
+  if (!process.env.ACCESS_TOKEN_SECRET) {
+    throw new Error('FATAL ERROR: ACCESS_TOKEN_SECRET is not defined in environment variables.');
+  }
   return jwt.sign(
     { id: user._id, email: user.email, role: user.role },
-    process.env.ACCESS_TOKEN_SECRET || 'access_secret_key',
+    process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: '15m' } // Short-lived access token
   );
 };
@@ -22,9 +25,12 @@ export const generateAccessToken = (user) => {
  * @returns {string} Refresh Token
  */
 export const generateRefreshToken = (user) => {
+  if (!process.env.REFRESH_TOKEN_SECRET) {
+    throw new Error('FATAL ERROR: REFRESH_TOKEN_SECRET is not defined in environment variables.');
+  }
   return jwt.sign(
     { id: user._id },
-    process.env.REFRESH_TOKEN_SECRET || 'refresh_secret_key',
+    process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: '7d' } // Long-lived refresh token
   );
 };
