@@ -24,15 +24,11 @@
     <style>
 :root {
   --bg-primary: #0D0D0D;
-  --bg-secondary: #141414;
-  --surface: #1A1A1A;
 
   --accent: #D17A22;        /* refined orange */
-  --accent-soft: #E89A3D;
   --accent-muted: rgba(209, 122, 34, 0.5);
 
   --text-primary: #F5F5F5;
-  --text-secondary: #A0A0A0;
 
   --border-subtle: rgba(255,255,255,0.06);
 }
@@ -57,16 +53,6 @@ body {
   backdrop-filter: blur(14px);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
-}
-
-/* GRADIENT OVERLAY */
-.gradient-overlay {
-  background: linear-gradient(
-    to right,
-    rgba(13, 13, 13, 1) 25%,
-    rgba(13, 13, 13, 0.6) 60%,
-    rgba(13, 13, 13, 0) 100%
-  );
 }
 
 /* SCREEN LINE */
@@ -220,14 +206,6 @@ body {
                     <div>
                         <span class="text-kesariya font-bold tracking-widest uppercase mb-2 block text-[10px] md:text-xs">Recommended</span>
                         <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight">TRENDING <span class="text-kesariya">MOVIES</span></h2>
-                    </div>
-                    <div class="flex gap-4 hidden sm:flex">
-                        <button class="p-3 glass rounded-full hover:bg-white/10 transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                        </button>
-                        <button class="p-3 glass rounded-full hover:bg-white/10 transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </button>
                     </div>
                 </div>
                 
